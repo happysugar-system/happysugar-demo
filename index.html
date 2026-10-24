@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ja">
 <head>
@@ -32,7 +33,13 @@ h1{font-size:32px;line-height:1.25;margin:0 0 14px;font-weight:800;letter-spacin
 </style>
 <script>
 // 営業用トップページ：本番のGAS・DB・スプレッドシートには接続しません。
-function showComingSoon(){alert('こちらは営業用デモです。詳細画面は準備中です。');}
+function showComingSoon(){
+  alert('こちらは営業用デモです。詳細画面は準備中です。');
+}
+
+function openShiftDemo(){
+  window.location.href = './shift-demo.html';
+}
 </script>
 </head>
 <body>
@@ -43,16 +50,37 @@ function showComingSoon(){alert('こちらは営業用デモです。詳細画�
    <div class="demoTag">営業用デモ</div>
    <h1>業務システム</h1>
    <p class="sub">Happy sugar の業務管理デモを<br>ご紹介します。</p>
+
    <button class="menu" type="button" onclick="showComingSoon()">
-     <span class="menuIcon">🚗</span><span class="menuText"><span class="menuTitle">車両・ドライバー管理</span><span class="menuSub">車両情報・貸出状況・ドライバー管理</span></span><span class="arrow">›</span>
+     <span class="menuIcon">🚗</span>
+     <span class="menuText">
+       <span class="menuTitle">車両・ドライバー管理</span>
+       <span class="menuSub">車両情報・貸出状況・ドライバー管理</span>
+     </span>
+     <span class="arrow">›</span>
    </button>
+
    <button class="menu" type="button" onclick="showComingSoon()" style="margin-top:16px">
-     <span class="menuIcon">📩</span><span class="menuText"><span class="menuTitle">LINE受付管理</span><span class="menuSub">申込受付・お問い合わせ管理</span></span><span class="arrow">›</span>
+     <span class="menuIcon">📩</span>
+     <span class="menuText">
+       <span class="menuTitle">LINE受付管理</span>
+       <span class="menuSub">申込受付・お問い合わせ管理</span>
+     </span>
+     <span class="arrow">›</span>
    </button>
-   <button class="menu" type="button" onclick="showComingSoon()" style="margin-top:16px">
-     <span class="menuIcon">📅</span><span class="menuText"><span class="menuTitle">勤怠・シフト管理</span><span class="menuSub">シフト確認・出退勤・打刻管理</span></span><span class="arrow">›</span>
+
+   <button class="menu" type="button" onclick="openShiftDemo()" style="margin-top:16px">
+     <span class="menuIcon">📅</span>
+     <span class="menuText">
+       <span class="menuTitle">勤怠・シフト管理</span>
+       <span class="menuSub">シフト確認・出退勤・打刻管理</span>
+     </span>
+     <span class="arrow">›</span>
    </button>
-   <div class="note">営業用のサンプル画面です。実際のお客様の情報やシステムには接続していません。</div>
+
+   <div class="note">
+     営業用のサンプル画面です。実際のお客様の情報やシステムには接続していません。
+   </div>
  </div>
 </main>
 </body>
