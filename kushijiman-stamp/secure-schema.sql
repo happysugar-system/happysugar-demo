@@ -56,6 +56,9 @@ declare
   v_active boolean;
   v_points integer;
   v_cards integer;
+  v_prior_member uuid;
+  v_prior_actor uuid;
+  v_prior_store text;
 begin
   v_actor := (select auth.uid());
   if v_actor is null then raise exception 'login required' using errcode = '42501'; end if;
@@ -74,7 +77,14 @@ begin
   if not found then raise exception 'member not found'; end if;
 
   -- Idempotency for retries: a request UUID can only be applied once.
-  if exists (select 1 from public.kj_stamp_events e where e.request_id = p_request_id) then
+  select e.member_id, e.staff_id, e.store_code
+    into v_prior_member, v_prior_actor, v_prior_store
+    from public.kj_stamp_events e where e.request_id = p_request_id;
+  if found then
+    if v_prior_member is distinct from p_member_id or v_prior_actor is distinct from v_actor
+       or v_prior_store is distinct from p_store_code then
+      raise exception 'request identifier reused for another operation';
+    end if;
     return query select v_points, v_cards;
     return;
   end if;
