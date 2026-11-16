@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#211710">
-<title>串じまん・炙り家しんいち 共通スタンプカード｜DEMO</title>
+<title>串じまん・炙り家しんいち 共通スタンプカード｜お客様デモ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 :root{--ink:#271a16;--brown:#3f2419;--gold:#bd8d3e;--pale:#f9eacf;--paper:#fff8ed;--red:#bd241f;--muted:#796a5b}
@@ -29,15 +29,15 @@ button:focus-visible,select:focus-visible{outline:3px solid #e8ae57;outline-offs
 /* Premium customer-facing visual */
 body[data-role="customer"] .nav{grid-template-columns:repeat(2,1fr)}
 body[data-role="customer"] #tab-staff,body[data-role="customer"] #page-staff{display:none!important}
-body[data-role="staff"] .nav{grid-template-columns:1fr}
-body[data-role="staff"] #tab-card,body[data-role="staff"] #tab-gifts,body[data-role="staff"] #page-card,body[data-role="staff"] #page-gifts{display:none!important}
-body[data-role="staff"] .hero{padding-bottom:15px}
-body[data-role="staff"] .brand{min-height:75px;margin:5px auto}
-body[data-role="staff"] .logo-real{height:77px}
-body[data-role="staff"] .shin-wrap{width:92px}
-body[data-role="staff"] .shin-wrap img{height:52px}
-body[data-role="staff"] .hero-title{font-size:20px}
-body[data-role="staff"] .hero-title:before{content:"店舗スタッフ操作デモ";display:block;color:#efcf97;font-family:"Noto Sans JP";font-size:12px}
+
+
+
+
+
+
+
+
+
 body[data-role="customer"] #page-card>.card:first-of-type{border:2px solid #c69a59;background:linear-gradient(145deg,#fffdf4,#f8e7c8)}
 body[data-role="customer"] #page-card>.card:first-of-type:after{content:"";position:absolute;bottom:6px;right:8px;width:70px;height:48px;border-top:3px double #c69b5b;border-radius:50%;opacity:.35;pointer-events:none}
 body[data-role="customer"] .reward{overflow:hidden}
@@ -63,7 +63,7 @@ body[data-role="customer"] .stamp.filled{box-shadow:0 0 0 2px #f4c6b9 inset}
 @media(max-width:390px){.brand .logo-real{width:100px;height:120px}.brand .shin-wrap{width:125px}.brand .shin-wrap img{height:95px}.gift-text .gift-mini{height:46px;width:54px}}
 </style></head><body data-role="customer">
 <div class="shell"><header class="hero"><div class="eyebrow">KUSHIJIMAN × SHINICHI / STAMP MEMBERSHIP</div><div class="brand"><img class="logo-real" src="assets/uploads/logo-kushijiman.png" alt="串じまん 炭焼家の実物ロゴを元にトレースしたもの"><span class="plus">×</span><div class="shin-wrap"><img src="assets/uploads/logo-shinichi.png" alt="炙り家しんいちの実物ロゴを元にトレースしたもの"><span class="sublogo">炙り家しんいち</span></div></div><div class="hero-title">デジタルスタンプカード</div><div class="tagline">姉妹店「炙り家しんいち」でも使える！</div><div><span class="pill">2店舗共通スタンプカード</span></div></header>
-<div class="demo-switch"><span>お客様向けカード</span><a href="./staff.html?v=8">スタッフ操作デモを開く ↗</a></div><nav class="nav"><button id="tab-card" class="active" data-tab="card">🎴 スタンプ</button><button id="tab-gifts" data-tab="gifts">🎁 特典</button><button id="tab-staff" data-tab="staff" aria-hidden="true">🏮 スタッフ</button></nav>
+<nav class="nav"><button id="tab-card" class="active" data-tab="card">🎴 スタンプ</button><button id="tab-gifts" data-tab="gifts">🎁 特典</button></nav>
 <div id="page-card" class="content">
 <div class="notice">これは提案用デモです。実際の会員登録・QR認証・店舗データ連携は未実装です。</div><div class="rooster-welcome"><img src="assets/uploads/chicken-beer.png" alt="ビールで乾杯するサングラスのニワトリ"><div><strong>串じまんで<br>乾杯しよう！</strong><small>2店舗共通スタンプカード</small></div></div>
 <section class="card"><div class="label">串じまん・炙り家しんいち 共通カード｜会員 KJ-DEMO001</div><div style="display:flex;justify-content:space-between;align-items:end;margin-top:9px"><div><span class="big" id="points">2</span> <span class="muted">/ 10 ポイント</span></div><span style="color:#9a332b;font-weight:800">串じまん印</span></div><div id="stamps" class="stamp-grid"></div><div class="progress"><div id="bar"></div></div><div class="muted" id="next-point"></div></section>
@@ -71,16 +71,13 @@ body[data-role="customer"] .stamp.filled{box-shadow:0 0 0 2px #f4c6b9 inset}
 <div class="reward"><div><div class="label">10ポイント達成</div><strong>1,500円引き！！</strong><small id="r10">あと8ポイント</small></div><span style="font-size:30px">🎉</span></div>
 <div class="doodle-panel"><img src="assets/uploads/chicken-yakitori.png" alt="焼き鳥を持つ串じまんのニワトリ"><div><p>串じまんで<br>スタンプを貯めよう！</p><small>2店舗共通・手描き風イラスト</small></div></div><section class="card"><img class="rooster-small" src="assets/rooster-thumb.svg" alt="グッドサインのニワトリ"><div class="label">累計の完成カード枚数</div><div class="big"><span id="totalcards">0</span> <span style="font-size:16px">枚</span></div><div class="muted">2店舗で共通カウント。Tシャツなどの特典に使えます。</div><button class="button ghost" onclick="showTab('gifts')">累計特典を確認する</button></section></div>
 <div id="page-gifts" class="content hidden"><div class="doodle-panel"><img src="assets/uploads/chicken-yakitori.png" alt="焼き鳥を持つ串じまんのニワトリ"><div><p>串じまんで<br>スタンプを貯めよう！</p><small>2店舗共通・手描き風イラスト</small></div></div><div class="notice">ポスターの特典を再現しています。引換条件やサービス併用ルールは、お店と確認後に確定します。</div><section class="card"><div class="label">完成カードの累計</div><div class="big"><span id="giftcards">0</span> 枚</div><div id="tierlist"><div class="gift-row"><div class="gift-badge">5枚</div><div class="gift-art"><img src="assets/uploads/reward-tshirt-handdrawn.png" alt="手描きのTシャツ"></div><div class="gift-text"><strong>串じまんTシャツ プレゼント</strong><div class="gift-note">🍺 来店時着用でドリンク1杯サービス</div></div></div><div class="gift-row"><div class="gift-badge">10枚</div><div class="gift-art"><img src="assets/uploads/reward-hoodie-handdrawn.png" alt="手描きのパーカー"></div><div class="gift-text"><strong>串じまんパーカー プレゼント</strong><div class="gift-note">🍢 来店時着用でおつまみ1品サービス</div></div></div><div class="gift-row"><div class="gift-badge">30枚</div><div class="gift-art"><span class="gift-art-fallback">🍶</span></div><div class="gift-text"><strong>お好きなお酒1升 プレゼント</strong><div class="gift-note">🍺 来店ごとにドリンク1杯サービス</div></div></div><div class="gift-row"><div class="gift-badge">50枚</div><div class="gift-art"><span class="gift-art-fallback">🏅</span></div><div class="gift-text"><strong>名誉会員様</strong><div class="gift-note">お名前入り特典（詳細は店舗確認）</div></div></div></div></section></div>
-<div id="page-staff" class="content hidden"><div class="notice">スタッフ操作の体験用。ここでの変更はこのブラウザのデモデータだけに反映されます。本物のお客様のスタンプは操作できません。</div>
-<section class="card"><div class="label">利用店舗</div><select id="store"><option value="串じまん">串じまん</option><option value="炙り家しんいち">炙り家しんいち</option></select><div class="stats"><div class="stat"><span class="label">現在ポイント</span><b id="staffpoints">2 / 10</b></div><div class="stat"><span class="label">完成カード</span><b id="staffcards">0 枚</b></div></div><button class="button" id="add">＋1 スタンプ付与（デモ）</button><button class="button secondary" id="use5">500円引き 使用済みにする</button><button class="button secondary" id="use10">1,500円引き 使用済みにする</button><button class="button ghost" id="reset">デモデータを初期化</button><p class="muted">仮ルール：5pt割引は5ptを消費、10pt割引は10ptを消費して完成カード1枚に加算。実際の紙カード運用と異なる場合は調整します。</p></section><h2 class="h2">操作履歴（この端末のみ）</h2><section class="card" id="history"></section></div>
-<footer class="footer">HAPPYSUGAR BUSINESS SOLUTIONS｜デザイン試作 v8.0<br>GitHub Pages上の表示はデモ専用です</footer></div>
-<div class="modal" id="confirm"><div class="dialog"><h3 id="confirmTitle"></h3><p class="muted" id="confirmText"></p><button id="yes" class="button">実行する</button><button id="no" class="button ghost">キャンセル</button></div></div>
+<footer class="footer">HAPPYSUGAR BUSINESS SOLUTIONS｜お客様画面 v9.0<br>GitHub Pages上の表示はデモ専用です</footer></div>
 <script>
 "use strict";
 const KEY="kushijiman-stamp-demo-v1",init=()=>({points:2,cards:0,history:[]});
 function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(!x||!Number.isInteger(x.points)||x.points<0||x.points>10||!Number.isInteger(x.cards)||x.cards<0||!Array.isArray(x.history))return init();return x}catch{return init()}}
 let state=load();function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
-function showTab(tab){if(document.body.dataset.role==="customer" && tab==="staff")return;if(document.body.dataset.role==="staff" && tab!=="staff")return;for(const t of ["card","gifts","staff"]){document.getElementById("page-"+t).classList.toggle("hidden",t!==tab);document.getElementById("tab-"+t).classList.toggle("active",t===tab)}window.scrollTo({top:0,behavior:"smooth"})}
+function showTab(tab){if(!["card","gifts"].includes(tab))return;for(const t of ["card","gifts"]){document.getElementById("page-"+t).classList.toggle("hidden",t!==tab);document.getElementById("tab-"+t).classList.toggle("active",t===tab)}window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
 const tiers=[{n:5,art:"shirt",emoji:"🍺",title:"串じまんTシャツ プレゼント",note:"来店時着用でドリンク1杯サービス"},{n:10,art:"hoodie",emoji:"🍢",title:"串じまんパーカー プレゼント",note:"来店時着用でおつまみ1品サービス"},{n:30,art:"sake",emoji:"🍺",title:"お好きなお酒1升 プレゼント",note:"来店ごとにドリンク1杯サービス"},{n:50,art:"medal",emoji:"🏅",title:"名誉会員様",note:"お名前入り特典（詳細は店舗確認）"}];
 
@@ -96,17 +93,8 @@ function rewardMarkup(t){
  const mini=merchandise[t.art]?'<img class="gift-mini" src="assets/uploads/'+merchandise[t.art]+'" alt="手描きの特典" loading="lazy">':'';
  return '<div class="gift-row"><div class="gift-badge">'+t.n+'枚</div><div class="gift-art">'+img+'</div><div class="gift-text"><strong>'+t.title+'</strong>'+mini+'<div class="gift-note">'+t.emoji+' '+t.note+'</div><div class="gift-progress '+(state.cards>=t.n?'completed':'')+'">'+(state.cards>=t.n?'達成済み':'あと'+(t.n-state.cards)+'枚')+'</div></div></div>'
 }
-function render(){const p=state.points;document.getElementById("points").textContent=p;document.getElementById("staffpoints").textContent=p+" / 10";document.getElementById("totalcards").textContent=state.cards;document.getElementById("staffcards").textContent=state.cards+" 枚";document.getElementById("giftcards").textContent=state.cards;document.getElementById("bar").style.width=(p*10)+"%";document.getElementById("stamps").innerHTML=Array.from({length:10},(_,i)=>'<div class="stamp '+(i<p?"filled":"")+'">'+(i<p?"串":(i+1))+"</div>").join("");document.getElementById("r5").textContent=p>=5?"達成！利用できます":"あと"+(5-p)+"ポイント";document.getElementById("r10").textContent=p>=10?"達成！利用できます":"あと"+(10-p)+"ポイント";document.getElementById("next-point").textContent=p>=10?"10ポイント達成！":p>=5?"次の10ポイント特典まであと"+(10-p)+"ポイント":"5ポイント特典まであと"+(5-p)+"ポイント";document.getElementById("tierlist").innerHTML=tiers.map(rewardMarkup).join("");document.getElementById("use5").disabled=p<5;document.getElementById("use10").disabled=p<10;document.getElementById("add").disabled=p>=10;document.getElementById("history").innerHTML=state.history.length?state.history.slice(0,20).map(h=>'<div class="history"><span>'+h.time+' '+h.store+'</span><b>'+h.label+'</b></div>').join(""):'<p class="muted">まだ履歴はありません</p>'}
-let pending=null;function ask(title,txt,fn){pending=fn;document.getElementById("confirmTitle").textContent=title;document.getElementById("confirmText").textContent=txt;document.getElementById("confirm").classList.add("show")}
-document.getElementById("no").onclick=()=>{pending=null;document.getElementById("confirm").classList.remove("show")};
-document.getElementById("yes").onclick=()=>{const f=pending;pending=null;document.getElementById("confirm").classList.remove("show");if(f)f()};
-const store=()=>document.getElementById("store").value;
-function record(label){state.history.unshift({time:new Date().toLocaleDateString("ja-JP"),store:store(),label});state.history=state.history.slice(0,30);save()}
-document.getElementById("add").onclick=()=>ask("スタンプを1個付与","利用店舗："+store()+"（デモの操作です）",()=>{if(state.points>=10)return;state.points++;record("+1pt")});
-document.getElementById("use5").onclick=()=>ask("500円引きの利用","5ポイントを消費する仮ルールで処理します。",()=>{if(state.points<5)return;state.points-=5;record("500円引き")});
-document.getElementById("use10").onclick=()=>ask("1,500円引きの利用","10ポイントを消費し、完成カードを1枚加算します。",()=>{if(state.points<10)return;state.points-=10;state.cards++;record("1500円引き＋完成1枚")});
-document.getElementById("reset").onclick=()=>ask("デモを初期化","このブラウザのデモデータだけを初期化します。",()=>{state=init();save()});
+function render(){const p=state.points;document.getElementById("points").textContent=p;document.getElementById("totalcards").textContent=state.cards;document.getElementById("giftcards").textContent=state.cards;document.getElementById("bar").style.width=(p*10)+"%";document.getElementById("stamps").innerHTML=Array.from({length:10},(_,i)=>'<div class="stamp '+(i<p?"filled":"")+'">'+(i<p?"串":(i+1))+"</div>").join("");document.getElementById("r5").textContent=p>=5?"達成！利用できます":"あと"+(5-p)+"ポイント";document.getElementById("r10").textContent=p>=10?"達成！利用できます":"あと"+(10-p)+"ポイント";document.getElementById("next-point").textContent=p>=10?"10ポイント達成！":p>=5?"次の10ポイント特典まであと"+(10-p)+"ポイント":"5ポイント特典まであと"+(5-p)+"ポイント";document.getElementById("tierlist").innerHTML=tiers.map(rewardMarkup).join("");}
 window.addEventListener("storage",e=>{if(e.key===KEY){state=load();render()}});
 render();
-if(document.body.dataset.role==="staff")showTab("staff");
+
 </script></body></html>
