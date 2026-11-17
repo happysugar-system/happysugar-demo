@@ -10,7 +10,7 @@
 <div class="stats"><div class="stat"><small>10pt達成まで残り2pt以内</small><strong id="near-points">0 人</strong></div><div class="stat"><small>累計特典まで残り1枚</small><strong id="near-cards">0 人</strong></div></div>
 <p class="muted">対象会員を押すと、そのままスタンプ操作画面で確認できるよ。</p><div id="near-list"></div></section>
 <div class="chickenline"><img class="chicken" src="../kushijiman-stamp/assets/uploads/chicken-thumbs-up.png" alt="グッドサインのニワトリ"><div><strong>お客様のQRを確認する</strong><div class="muted">スタッフ用の読み取り操作を体験</div></div></div>
-<section class="card"><h2>📷 会員QR読取デモ</h2><button id="scan-demo" class="button">QRを読み取った想定で会員を表示</button><p class="scan-info">プレゼン用：ボタンを押すと「KJ-DEMO001」を読み取った想定で表示します。実際のカメラ起動はしません。</p>
+<section class="card"><h2>📷 会員QR読取デモ</h2><button id="scan-demo" class="button">QR読取デモ：あと1ptのお客様</button><button id="scan-customer" class="button ghost">お客様カードの会員番号を呼び出す</button><p class="scan-info">プレゼン用：上のボタンは「KJ-DEMO002（9pt）」、下は「KJ-DEMO001（お客様画面のデモ会員）」を呼び出します。どちらもカメラを使わない模擬読取です。</p>
 <label class="label" for="member-code">または会員番号を入力して呼び出し</label><div class="scan-row"><input id="member-code" autocomplete="off" placeholder="例：KJ-DEMO002" maxlength="32"><button type="button" id="find-member">検索</button></div><div id="scan-result" role="status" aria-live="polite"></div></section>
 <section class="card" id="operate"><h2>🐔 スタンプ・特典操作</h2><label class="label" for="store">利用店舗を選択（デモ）</label><select id="store"><option value="串じまん">串じまん</option><option value="炙り家しんいち">炙り家しんいち</option></select><div class="member-info"><h3 id="member-name">KJ-DEMO001</h3><div class="detail-name" id="member-desc">デモ会員</div><div class="stats"><div class="stat"><small>現在のスタンプ</small><strong id="points">2/10</strong></div><div class="stat"><small>完成カード</small><strong id="cards">0枚</strong></div></div><p class="notice-inline" id="member-alert"></p><div class="muted" id="member-alert-sub"></div></div>
 <button id="add" class="button">＋1 スタンプ付与（デモ）</button><button id="use5" class="button secondary">500円引きを使用済みにする</button><button id="use10" class="button secondary">1,500円引きを使用済みにする</button><button id="reset" class="button ghost">デモデータを初期化</button><p class="muted">割引利用の仮ルール：5pt引換は5pt消費、10pt引換は10pt消費＋完成カード1枚追加。実際のルールは店舗確認後に調整します。</p></section>
@@ -62,7 +62,8 @@ el("add").onclick=()=>confirmAction("スタンプを1個付与",memberId+" ／ "
 el("use5").onclick=()=>confirmAction("500円引きを使用",memberId+" ／ 5ポイント消費（仮ルール）",()=>change("500円引き",m=>{if(m.points<5)return false;m.points-=5;return true}));
 el("use10").onclick=()=>confirmAction("1,500円引きを使用",memberId+" ／ 10ポイント消費＋完成カード1枚（仮ルール）",()=>change("1,500円引き＋完成1枚",m=>{if(m.points<10)return false;m.points-=10;m.cards++;return true}));
 el("reset").onclick=()=>confirmAction("デモを初期化","デモ用の会員データをすべて初期化します。",()=>{localStorage.removeItem(KEY);localStorage.removeItem(MEMBER_KEY);extras=extrasLoad();memberId="KJ-DEMO001";el("scan-result").textContent="デモデータを初期化しました";render()});
-el("scan-demo").onclick=()=>selectMember("KJ-DEMO001",true);
+el("scan-demo").onclick=()=>selectMember("KJ-DEMO002",true);
+el("scan-customer").onclick=()=>selectMember("KJ-DEMO001",true);
 function searchMember(){const id=el("member-code").value.trim().toUpperCase();if(!id){el("scan-result").textContent="会員番号を入力してください";return}selectMember(id,true)}
 el("find-member").onclick=searchMember;el("member-code").addEventListener("keydown",e=>{if(e.key==="Enter")searchMember()});
 window.addEventListener("storage",e=>{if(e.key===KEY||e.key===MEMBER_KEY){extras=extrasLoad();render()}});render();
