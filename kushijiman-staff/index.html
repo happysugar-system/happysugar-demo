@@ -5,10 +5,10 @@
 </style></head>
 <body><div class="app"><header class="hero"><small>STORE STAFF / DEMO ONLY</small><div class="brand"><img src="../kushijiman-stamp/assets/uploads/logo-kushijiman.png" alt="串じまんロゴ"><span>×</span><div class="shin"><img src="../kushijiman-stamp/assets/uploads/logo-shinichi.png" alt="炙り家しんいちロゴ"></div></div><h1>店舗スタッフ管理</h1><p>串じまん・炙り家しんいち 共通</p></header>
 <main class="content">
-<div class="notice"><b>提案用デモ：</b>以下はサンプル会員データです。QRの実カメラ読取・スタッフログイン・Supabaseとの連携はまだありません。本番のお客様データやポイントは操作できません。</div>
+<div class="notice"><b>提案用デモ：</b>以下はサンプル会員データです。カメラQR読取はデモ対応です。スタッフログイン・Supabaseとの連携はまだありません。本番のお客様データやポイントは操作できません。</div>
 
 <div class="chickenline"><img class="chicken" src="../kushijiman-stamp/assets/uploads/chicken-thumbs-up.png" alt="グッドサインのニワトリ"><div><strong>お客様のQRを確認する</strong><div class="muted">スタッフ用の読み取り操作を体験</div></div></div>
-<section class="card"><h2>📷 お客様のQRを読み取る</h2><button id="scan-demo" class="button">QR読取デモ：あと1ptのお客様</button><button id="scan-customer" class="button ghost">お客様カードの会員番号を呼び出す</button><p class="scan-info">プレゼン用：上のボタンは「KJ-DEMO002（9pt）」、下は「KJ-DEMO001（お客様画面のデモ会員）」を呼び出します。どちらもカメラを使わない模擬読取です。</p>
+<section class="card"><h2>📷 お客様のQRを読み取る</h2><button id="camera-start" class="button" type="button">📷 カメラでQRを読み取る</button><div id="camera-box" hidden style="margin-top:10px"><div id="qr-reader" style="width:100%;overflow:hidden;border-radius:12px"></div><button id="camera-stop" type="button" class="button ghost">カメラを閉じる</button></div><p id="camera-status" class="scan-info" role="status"></p><button id="scan-demo" class="button">QR読取デモ：あと1ptのお客様</button><button id="scan-customer" class="button ghost">お客様カードの会員番号を呼び出す</button><p class="scan-info">プレゼン用：上のボタンは「KJ-DEMO002（9pt）」、下は「KJ-DEMO001（お客様画面のデモ会員）」を呼び出します。どちらもカメラを使わない模擬読取です。</p>
 <label class="label" for="member-code">または会員番号を入力して呼び出し</label><div class="scan-row"><input id="member-code" autocomplete="off" placeholder="例：KJ-DEMO002" maxlength="32"><button type="button" id="find-member">検索</button></div><div id="scan-result" role="status" aria-live="polite"></div></section>
 <section class="card" id="operate"><h2>🐔 スタンプ・特典操作</h2><label class="label" for="store">利用店舗を選択（デモ）</label><select id="store"><option value="串じまん">串じまん</option><option value="炙り家しんいち">炙り家しんいち</option></select><div class="member-info"><h3 id="member-name">KJ-DEMO001</h3><div class="detail-name" id="member-desc">デモ会員</div><div class="stats"><div class="stat"><small>現在のスタンプ</small><strong id="points">2/10</strong></div><div class="stat"><small>完成カード</small><strong id="cards">0枚</strong></div></div><p class="notice-inline" id="member-alert"></p><div class="muted" id="member-alert-sub"></div></div>
 <button id="add" class="button">＋1 スタンプ付与（デモ）</button><button id="use5" class="button secondary">500円引きを使用済みにする</button><button id="use10" class="button secondary">1,500円引きを使用済みにする</button><button id="reset" class="button ghost">デモデータを初期化</button><p class="muted">割引利用の仮ルール：5pt引換は5pt消費、10pt引換は10pt消費＋完成カード1枚追加。実際のルールは店舗確認後に調整します。</p></section>
@@ -16,7 +16,7 @@
 <div class="stats"><div class="stat"><small>10pt達成まで残り2pt以内</small><strong id="near-points">0 人</strong></div><div class="stat"><small>累計特典まで残り1枚</small><strong id="near-cards">0 人</strong></div></div>
 <p class="muted">対象会員を押すと、そのままスタンプ操作画面で確認できるよ。</p><div id="near-list"></div></div><button id="near-more" type="button" class="button ghost" style="margin-top:12px">対象会員をすべて見る</button></details>
 <section class="card"><h2>最近の操作履歴（この端末のみ）</h2><div id="history" class="muted">履歴はありません</div></section>
-</main><footer>HAPPYSUGAR BUSINESS SOLUTIONS｜店舗スタッフ用デモ v2<br>本番用の認証・読み取り・ポイント付与は未実装です</footer></div>
+</main><footer>HAPPYSUGAR BUSINESS SOLUTIONS｜店舗スタッフ用デモ v2<br>カメラ読取はデモ用。本番用の認証・データ連携は未実装です</footer></div>
 <div class="dialog-cover" id="cover"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><h3 id="confirm-title"></h3><p id="confirm-text" class="muted"></p><button class="button" id="confirm-yes">実行する</button><button class="button ghost" id="confirm-no">キャンセル</button></div></div>
 <script>
 "use strict";
@@ -69,5 +69,26 @@ el("scan-demo").onclick=()=>selectMember("KJ-DEMO002",true);
 el("scan-customer").onclick=()=>selectMember("KJ-DEMO001",true);
 function searchMember(){const id=el("member-code").value.trim().toUpperCase();if(!id){el("scan-result").textContent="会員番号を入力してください";return}selectMember(id,true)}
 el("find-member").onclick=searchMember;el("member-code").addEventListener("keydown",e=>{if(e.key==="Enter")searchMember()});
+let qrScanner=null,scanBusy=false;
+async function stopCamera(){
+ if(qrScanner){try{await qrScanner.stop()}catch(e){}try{qrScanner.clear()}catch(e){}qrScanner=null}
+ el("camera-box").hidden=true;el("camera-start").disabled=false;
+}
+el("camera-start").onclick=async()=>{
+ if(!window.Html5Qrcode){el("camera-status").textContent="QR読取ライブラリを読み込めませんでした。通信環境を確認してください";return}
+ el("camera-start").disabled=true;el("camera-box").hidden=false;el("camera-status").textContent="カメラの使用を許可してください";
+ try{
+ qrScanner=new Html5Qrcode("qr-reader");
+ await qrScanner.start({facingMode:"environment"},{fps:10,qrbox:{width:220,height:220}},async decoded=>{
+ if(scanBusy)return;scanBusy=true;
+ const id=decoded.trim().toUpperCase();
+ if(!/^KJ-DEMO00[1-5]$/.test(id)){el("camera-status").textContent="デモ用会員QRではありません。KJ-DEMO001〜005を読み取ってください";scanBusy=false;return}
+ await stopCamera();el("camera-status").textContent=id+" を読み取りました";selectMember(id,true);scanBusy=false;
+ },()=>{});
+ el("camera-status").textContent="お客様の会員QRを枠に合わせてください";
+ }catch(e){await stopCamera();el("camera-status").textContent="カメラを起動できません。ブラウザのカメラ許可やHTTPS接続を確認してください"}
+};
+el("camera-stop").onclick=stopCamera;
+window.addEventListener("pagehide",()=>{if(qrScanner)stopCamera()});
 window.addEventListener("storage",e=>{if(e.key===KEY||e.key===MEMBER_KEY){extras=extrasLoad();render()}});render();
-</script></body></html>
+</script><script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script></body></html>
