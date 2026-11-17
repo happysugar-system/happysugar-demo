@@ -6,14 +6,15 @@
 <body><div class="app"><header class="hero"><small>STORE STAFF / DEMO ONLY</small><div class="brand"><img src="../kushijiman-stamp/assets/uploads/logo-kushijiman.png" alt="串じまんロゴ"><span>×</span><div class="shin"><img src="../kushijiman-stamp/assets/uploads/logo-shinichi.png" alt="炙り家しんいちロゴ"></div></div><h1>店舗スタッフ管理</h1><p>串じまん・炙り家しんいち 共通</p></header>
 <main class="content">
 <div class="notice"><b>提案用デモ：</b>以下はサンプル会員データです。QRの実カメラ読取・スタッフログイン・Supabaseとの連携はまだありません。本番のお客様データやポイントは操作できません。</div>
-<section class="card"><div class="section-heading"><h2>🎁 もうすぐ特典達成！</h2><span class="tag">2店舗共通</span></div>
-<div class="stats"><div class="stat"><small>10pt達成まで残り2pt以内</small><strong id="near-points">0 人</strong></div><div class="stat"><small>累計特典まで残り1枚</small><strong id="near-cards">0 人</strong></div></div>
-<p class="muted">対象会員を押すと、そのままスタンプ操作画面で確認できるよ。</p><div id="near-list"></div></section>
+
 <div class="chickenline"><img class="chicken" src="../kushijiman-stamp/assets/uploads/chicken-thumbs-up.png" alt="グッドサインのニワトリ"><div><strong>お客様のQRを確認する</strong><div class="muted">スタッフ用の読み取り操作を体験</div></div></div>
-<section class="card"><h2>📷 会員QR読取デモ</h2><button id="scan-demo" class="button">QR読取デモ：あと1ptのお客様</button><button id="scan-customer" class="button ghost">お客様カードの会員番号を呼び出す</button><p class="scan-info">プレゼン用：上のボタンは「KJ-DEMO002（9pt）」、下は「KJ-DEMO001（お客様画面のデモ会員）」を呼び出します。どちらもカメラを使わない模擬読取です。</p>
+<section class="card"><h2>📷 お客様のQRを読み取る</h2><button id="scan-demo" class="button">QR読取デモ：あと1ptのお客様</button><button id="scan-customer" class="button ghost">お客様カードの会員番号を呼び出す</button><p class="scan-info">プレゼン用：上のボタンは「KJ-DEMO002（9pt）」、下は「KJ-DEMO001（お客様画面のデモ会員）」を呼び出します。どちらもカメラを使わない模擬読取です。</p>
 <label class="label" for="member-code">または会員番号を入力して呼び出し</label><div class="scan-row"><input id="member-code" autocomplete="off" placeholder="例：KJ-DEMO002" maxlength="32"><button type="button" id="find-member">検索</button></div><div id="scan-result" role="status" aria-live="polite"></div></section>
 <section class="card" id="operate"><h2>🐔 スタンプ・特典操作</h2><label class="label" for="store">利用店舗を選択（デモ）</label><select id="store"><option value="串じまん">串じまん</option><option value="炙り家しんいち">炙り家しんいち</option></select><div class="member-info"><h3 id="member-name">KJ-DEMO001</h3><div class="detail-name" id="member-desc">デモ会員</div><div class="stats"><div class="stat"><small>現在のスタンプ</small><strong id="points">2/10</strong></div><div class="stat"><small>完成カード</small><strong id="cards">0枚</strong></div></div><p class="notice-inline" id="member-alert"></p><div class="muted" id="member-alert-sub"></div></div>
 <button id="add" class="button">＋1 スタンプ付与（デモ）</button><button id="use5" class="button secondary">500円引きを使用済みにする</button><button id="use10" class="button secondary">1,500円引きを使用済みにする</button><button id="reset" class="button ghost">デモデータを初期化</button><p class="muted">割引利用の仮ルール：5pt引換は5pt消費、10pt引換は10pt消費＋完成カード1枚追加。実際のルールは店舗確認後に調整します。</p></section>
+<details class="card" id="near-panel"><summary style="cursor:pointer;font-weight:700;font-size:17px;padding:4px 0">🎁 もうすぐ特典達成 <span style="font-size:12px;font-weight:400">（タップして表示）</span></summary><div style="padding-top:14px"><div class="section-heading"><h2>🎁 もうすぐ特典達成！</h2><span class="tag">2店舗共通</span></div>
+<div class="stats"><div class="stat"><small>10pt達成まで残り2pt以内</small><strong id="near-points">0 人</strong></div><div class="stat"><small>累計特典まで残り1枚</small><strong id="near-cards">0 人</strong></div></div>
+<p class="muted">対象会員を押すと、そのままスタンプ操作画面で確認できるよ。</p><div id="near-list"></div></div><button id="near-more" type="button" class="button ghost" style="margin-top:12px">対象会員をすべて見る</button></details>
 <section class="card"><h2>最近の操作履歴（この端末のみ）</h2><div id="history" class="muted">履歴はありません</div></section>
 </main><footer>HAPPYSUGAR BUSINESS SOLUTIONS｜店舗スタッフ用デモ v2<br>本番用の認証・読み取り・ポイント付与は未実装です</footer></div>
 <div class="dialog-cover" id="cover"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><h3 id="confirm-title"></h3><p id="confirm-text" class="muted"></p><button class="button" id="confirm-yes">実行する</button><button class="button ghost" id="confirm-no">キャンセル</button></div></div>
@@ -39,6 +40,7 @@ function nextCardReward(cards){const thresholds=[5,10,30,50];let next=thresholds
 function alerts(m){const out=[];if(m.points>=10)out.push("10pt達成！1,500円引きを確認");else if(m.points>=8)out.push("あと"+(10-m.points)+"ptで1,500円引き");else if(m.points===5)out.push("500円引き達成！");else if(m.points===4)out.push("あと1ptで500円引き");const reward=nextCardReward(m.cards);if(reward&&reward.left<=1)out.push("あと1枚で"+reward.label+"特典");return out}
 function allMembers(){return [{id:"KJ-DEMO001",...mainLoad()},...extras]}
 function selectMember(id,scroll){if(!member(id)){el("scan-result").textContent="該当するデモ会員が見つかりません";return}memberId=id;el("scan-result").textContent=id+" を呼び出しました（デモ）";render();if(scroll)el("operate").scrollIntoView({behavior:"smooth",block:"start"})}
+window.showAllNear=false;
 function render(){
  const m=member(memberId)||base();
  el("member-name").textContent=memberId;el("member-desc").textContent="サンプル会員（本番データではありません）";el("points").textContent=m.points+"/10";el("cards").textContent=m.cards+"枚";
@@ -50,7 +52,7 @@ function render(){
  el("near-list").replaceChildren();
  const upcoming=all.map(x=>({...x,msg:alerts(x)})).filter(x=>x.msg.length).sort((a,b)=>Math.min(nextCardReward(a.cards)?.left??100,10-a.points)-Math.min(nextCardReward(b.cards)?.left??100,10-b.points));
  if(!upcoming.length)el("near-list").textContent="現在、達成間近のデモ会員はいません";
- for(const x of upcoming){const b=document.createElement("button");b.type="button";b.className="member-row"+(x.id===memberId?" selected":"");const left=document.createElement("span"),label=document.createElement("strong"),note=document.createElement("small"),right=document.createElement("span");label.textContent=x.id;note.textContent=x.msg.join(" ／ ");right.className="right";right.textContent=x.points+"/10pt";left.append(label,note);b.append(left,right);b.onclick=()=>selectMember(x.id,true);el("near-list").append(b)}
+ for(const x of upcoming.slice(0,window.showAllNear?undefined:5)){const b=document.createElement("button");b.type="button";b.className="member-row"+(x.id===memberId?" selected":"");const left=document.createElement("span"),label=document.createElement("strong"),note=document.createElement("small"),right=document.createElement("span");label.textContent=x.id;note.textContent=x.msg.join(" ／ ");right.className="right";right.textContent=x.points+"/10pt";left.append(label,note);b.append(left,right);b.onclick=()=>selectMember(x.id,true);el("near-list").append(b)}
  el("history").replaceChildren();if(!m.history.length){el("history").textContent="この会員の操作履歴はありません";return}
  for(const h of m.history.slice(0,20)){const row=document.createElement("div");row.className="history";const left=document.createElement("span"),right=document.createElement("b");left.textContent=h.time+" "+h.store;right.textContent=h.label;row.append(left,right);el("history").append(row)}
 }
@@ -58,6 +60,7 @@ function confirmAction(title,desc,fn){pending=fn;el("confirm-title").textContent
 el("confirm-no").onclick=()=>{pending=null;el("cover").classList.remove("active")};
 el("confirm-yes").onclick=()=>{const fn=pending;pending=null;el("cover").classList.remove("active");if(fn)fn()};
 function change(label,action){const m=member(memberId);if(!m)return;const copy={...m,history:[...m.history]};if(!action(copy))return;copy.history.unshift({time:new Date().toLocaleDateString("ja-JP"),store:el("store").value,label});copy.history=copy.history.slice(0,30);saveMember(copy)}
+el("near-more").onclick=()=>{window.showAllNear=!window.showAllNear;el("near-more").textContent=window.showAllNear?"5人表示に戻す":"対象会員をすべて見る";render()};
 el("add").onclick=()=>confirmAction("スタンプを1個付与",memberId+" ／ "+el("store").value+"（デモ）",()=>change("+1pt",m=>{if(m.points>=10)return false;m.points++;return true}));
 el("use5").onclick=()=>confirmAction("500円引きを使用",memberId+" ／ 5ポイント消費（仮ルール）",()=>change("500円引き",m=>{if(m.points<5)return false;m.points-=5;return true}));
 el("use10").onclick=()=>confirmAction("1,500円引きを使用",memberId+" ／ 10ポイント消費＋完成カード1枚（仮ルール）",()=>change("1,500円引き＋完成1枚",m=>{if(m.points<10)return false;m.points-=10;m.cards++;return true}));
